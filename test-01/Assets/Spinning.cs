@@ -9,7 +9,12 @@ public class Spinning : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+    {
+        var t = Time.time;
+        var s = Mathf.Cos(t * 0.01f) * 0.01f;
+        var transform = GetComponent<Transform>();
+
+        transform.Translate(s, 0.0f, 0.0f);
 	}
 }

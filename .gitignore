@@ -1,2 +1,4 @@
-/test-01/Temp
-/test-01/Library
+Temp/
+Library/
+obj/
+*.svd
