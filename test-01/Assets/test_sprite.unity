@@ -83,6 +83,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 22009972}
   - 212: {fileID: 22009971}
+  - 114: {fileID: 22009973}
   m_Layer: 0
   m_Name: megaman_sprite
   m_TagString: Untagged
@@ -124,6 +125,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &22009973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 22009970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5da761f4eefe7408f5562901a892a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1115815035
 GameObject:
   m_ObjectHideFlags: 0
