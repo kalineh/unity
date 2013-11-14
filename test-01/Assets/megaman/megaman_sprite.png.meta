@@ -1,0 +1,117 @@
+fileFormatVersion: 2
+guid: ba081383c32957e4e91417888ae20dac
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: megaman_sprite_0
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 263
+        width: 169
+        height: 153
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: megaman_sprite_1
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 263
+        width: 112
+        height: 167
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: megaman_sprite_2
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 263
+        width: 146
+        height: 153
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: megaman_sprite_3
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 263
+        width: 181
+        height: 208
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: megaman_sprite_4
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 40
+        width: 146
+        height: 168
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: megaman_sprite_5
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 40
+        width: 216
+        height: 168
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: megaman_sprite_6
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 33
+        width: 111
+        height: 154
+      alignment: 7
+      pivot: {x: 0, y: 0}
+    - name: megaman_sprite_7
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 27
+        width: 181
+        height: 194
+      alignment: 7
+      pivot: {x: 0, y: 0}
+  spritePackingTag: 
+  userData: 
