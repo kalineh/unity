@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour {
 
 	private int level = 3;
 
+	public int playerFoodPoints = 100;
+
+	[HideInInspector]
+	public bool playersTurn = true;
+
 	void Awake()
 	{
 		if (instance == null)
@@ -30,6 +35,11 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
+	}
+
+	public void GameOver()
+	{
+		enabled = false;
 	}
 	
 	// Update is called once per frame
