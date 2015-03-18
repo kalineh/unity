@@ -17,10 +17,17 @@ public class Seed : MonoBehaviour
 
 	void Grow()
 	{
+
 		var hinge = GetComponent<HingeJoint>();
 		var body = GetComponent<Rigidbody>();
 		var collider = GetComponent<SphereCollider>();
-		
+
+		if (generation > 5)
+		{
+			body.AddForce(Random.onUnitSphere * 5.0f);
+			return;
+		}
+
 		var child = Instantiate(this);
 
 		child.generation = this.generation + 1;
@@ -46,8 +53,8 @@ public class Seed : MonoBehaviour
 
 	IEnumerator tGrowth()
 	{
-		float interval = generation * generation * 0.25f;
-		float increment = 0.1f;
+		float interval = generation * generation * 0.15f;
+		float increment = 0.25f;
 
 		while (true)
 		{
