@@ -16,7 +16,7 @@ public class Seed
 
 	void Start ()
 	{
-		StartCoroutine("tGrowth");
+		//StartCoroutine("tGrowth");
 	}
 	
 	void Update ()

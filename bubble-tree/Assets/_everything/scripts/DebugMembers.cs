@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections;
 using System.Reflection;
 
 public class DebugMembers<T>
@@ -16,19 +17,32 @@ public class DebugMembers<T>
 		{
 			if (m.DeclaringType == typeof(T))
 			{
-				string s = string.Format("{0}.{1}()", m.DeclaringType.ToString(), m.Name);
+				string prefix = m.ReturnType == typeof(IEnumerator) ? "* " : "";
+				string s = string.Format("{0}{1}.{2}()", prefix, m.DeclaringType.ToString(), m.Name);
 
-				if (Application.isPlaying || true )
+				if (Application.isPlaying || true)
 				{
 					if (GUILayout.Button(s))
 					{
-						var o = target;
-						m.Invoke(target, null);
+						Invoke(m);
 					}
 				}
 			}
 		}
 
 		base.OnInspectorGUI();
+	}
+
+	private void Invoke(MethodInfo method)
+	{
+		if (method.ReturnType == typeof(IEnumerator))
+		{
+			var go = target as MonoBehaviour;
+			go.StartCoroutine(method.Name);
+		}
+		else
+		{
+			method.Invoke(target, null);
+		}
 	}
 }
