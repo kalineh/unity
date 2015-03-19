@@ -1,8 +1,16 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using Random = UnityEngine.Random;
 
-public class Seed : MonoBehaviour
+[CustomEditor(typeof(Seed))]
+public class SeedDebugMembers
+	: DebugMembers<Seed>
+{
+}
+
+public class Seed
+	: MonoBehaviour
 {
 	private int generation;
 
@@ -17,7 +25,6 @@ public class Seed : MonoBehaviour
 
 	void Grow()
 	{
-
 		var hinge = GetComponent<HingeJoint>();
 		var body = GetComponent<Rigidbody>();
 		var collider = GetComponent<SphereCollider>();

@@ -2,8 +2,7 @@
   <MonoDevelop.Ide.Workspace />
   <MonoDevelop.Ide.Workbench ActiveDocument="..\bubble-tree\Assets\_everything\scripts\Seed.cs">
     <Files>
-      <File FileName="..\bubble-tree\Assets\_everything\scripts\Seed.cs" Line="20" Column="42" />
-      <File FileName="Assets\Scripts\BoardManager.cs" Line="69" Column="5" />
+      <File FileName="..\bubble-tree\Assets\_everything\scripts\Seed.cs" Line="57" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
