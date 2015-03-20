@@ -12,11 +12,11 @@ public class SeedDebugMembers
 public class Seed
 	: MonoBehaviour
 {
-	private int generation;
+	private int generation = 1;
+	private Seed parent;
 
 	void Start ()
 	{
-		//StartCoroutine("tGrowth");
 	}
 	
 	void Update ()
@@ -25,37 +25,43 @@ public class Seed
 
 	void Grow()
 	{
-		var hinge = GetComponent<HingeJoint>();
 		var body = GetComponent<Rigidbody>();
 		var collider = GetComponent<SphereCollider>();
 
 		if (generation > 5)
 		{
-			body.AddForce(Random.onUnitSphere * 5.0f);
 			return;
 		}
 
 		var child = Instantiate(this);
 
 		child.generation = this.generation + 1;
+		child.parent = this;
+
+		child.gameObject.AddComponent<SpringJoint>();
 
 		var scale = 1.0f / child.generation;
 		var scale3 = new Vector3(scale, scale, scale);
 
-		var ofs = Random.onUnitSphere * collider.radius;
-		var force = Random.onUnitSphere * 2.5f;
+		var dir = Random.onUnitSphere;
+		var edge = dir * collider.radius;
+		var ofs = edge + dir * scale;
+		var force = dir * 5.0f;
 
 		var child_body = child.GetComponent<Rigidbody>();
 		var child_collider = child.GetComponent<SphereCollider>();
 		var child_mesh = child.GetComponent<MeshRenderer>();
+		var child_spring = child.GetComponent<SpringJoint>();
 
+		child_body.isKinematic = false;
 		child_body.mass = scale;
-		child_body.MovePosition(ofs);
-		child_body.AddForce(force);
-		//child_collider.radius = scale;
 		child_mesh.transform.localScale = scale3;
 
-		hinge.connectedBody = child.GetComponent<Rigidbody>();
+		child_body.MovePosition(ofs);
+		child_body.AddForce(force);
+
+		child_spring.connectedBody = body;
+		child_spring.anchor = edge;
 	}
 
 	IEnumerator tGrowth()
