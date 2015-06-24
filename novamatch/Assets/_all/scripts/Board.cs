@@ -25,7 +25,7 @@ public class Board
 		// create pieces from prefabs
 		// input handler
 		// 
-		var scale = 32.0f;
+		var scale = 1.0f;
 
 		for (int y = 0; y < DimensionY; ++y)
 		{
@@ -35,7 +35,7 @@ public class Board
 				var xy = new Vector2(x, y) * scale;
 
 				gem.transform.position = xy;
-				gem.transform.localScale = new Vector2(1000.0f, 1000.0f);
+				gem.transform.localScale = new Vector2(scale, scale);
 
 				gems.Add(gem);
 			}
