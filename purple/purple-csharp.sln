@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{E36D6B92-244A-3C8E-9C15-E8AB7C241239}") = "novamatch", "Assembly-CSharp-vs.csproj", "{A6D2BB6F-4CF3-56C9-A622-E2E91ACFC028}"
+Project("{BB7AEDFA-6100-7447-DD6E-FAF9F37641E3}") = "purple", "Assembly-CSharp-vs.csproj", "{E8190835-0AF2-76E4-A006-61C2EE951418}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A6D2BB6F-4CF3-56C9-A622-E2E91ACFC028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6D2BB6F-4CF3-56C9-A622-E2E91ACFC028}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6D2BB6F-4CF3-56C9-A622-E2E91ACFC028}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6D2BB6F-4CF3-56C9-A622-E2E91ACFC028}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8190835-0AF2-76E4-A006-61C2EE951418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8190835-0AF2-76E4-A006-61C2EE951418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8190835-0AF2-76E4-A006-61C2EE951418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8190835-0AF2-76E4-A006-61C2EE951418}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-													GlobalSection(MonoDevelopProperties) = preSolution
+					GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
