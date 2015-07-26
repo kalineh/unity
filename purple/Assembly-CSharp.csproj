@@ -46,7 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CameraMover.cs" />
      <Compile Include="Assets\MapGenerator.cs" />
+     <Compile Include="Assets\MapGeneratorEditorControl.cs" />
      <Compile Include="Assets\MeshGenerator.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

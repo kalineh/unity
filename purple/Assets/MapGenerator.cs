@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
 
 public class MapGenerator : MonoBehaviour {
 
@@ -22,13 +21,17 @@ public class MapGenerator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+			Debug.Log ("test");
 		if (Input.GetMouseButtonDown (0)) {
+			Debug.Log ("test");
 			GenerateMap();
 		}
 	}
 
-	void GenerateMap()
+	public void GenerateMap()
 	{
+		Debug.Log ("GenerateMap()");
+
 		map = new int[width, height];
 
 		RandomFillMap ();
@@ -40,12 +43,11 @@ public class MapGenerator : MonoBehaviour {
 
 		MeshGenerator meshGen = GetComponent<MeshGenerator> ();
 		meshGen.GenerateMesh (map, 1.0f);
-
 	}
 
 	void RandomFillMap()
 	{
-		if (useRandomSeed) {
+		if (useRandomSeed || true) {
 			seed = Time.time.ToString ();
 		}	
 
@@ -108,12 +110,14 @@ public class MapGenerator : MonoBehaviour {
 		if (map == null) {
 			GenerateMap();
 		}
-		return;
 
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0))
+		{
+			Debug.Log("arasdfasdf");
 			GenerateMap();
 		}
 
+		return;
 		if (map != null)
 		{
 			for (int x = 0; x < width; ++x)
