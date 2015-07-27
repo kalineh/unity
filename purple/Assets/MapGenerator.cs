@@ -21,9 +21,7 @@ public class MapGenerator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-			Debug.Log ("test");
 		if (Input.GetMouseButtonDown (0)) {
-			Debug.Log ("test");
 			GenerateMap();
 		}
 	}
@@ -41,8 +39,25 @@ public class MapGenerator : MonoBehaviour {
 			SmoothMap();
 		}
 
+		int borderSize = 5;
+		int[,] borderedMap = new int[width + borderSize * 2, height + borderSize * 2];
+
+		for (int x = 0; x < borderedMap.GetLength(0); ++x) {
+			for (int y = 0; y < borderedMap.GetLength(1); ++y) {
+				if (x >= borderSize && x < width + borderSize &&
+				    y >= borderSize && y < height + borderSize)
+				{
+					borderedMap[x,y] = map[x-borderSize, y-borderSize];
+				}
+				else
+				{
+					borderedMap[x,y] = 1;
+				}
+			}
+		}
+
 		MeshGenerator meshGen = GetComponent<MeshGenerator> ();
-		meshGen.GenerateMesh (map, 1.0f);
+		meshGen.GenerateMesh(borderedMap, 1.0f);
 	}
 
 	void RandomFillMap()
