@@ -20,7 +20,21 @@ public class CameraMover : MonoBehaviour
 		
 		float deltaX = Input.GetAxis ("Mouse X") * sensitivityX;
 		float deltaY = Input.GetAxis ("Mouse Y") * sensitivityY;
-		
+
+		Vector3 mv = Vector3.zero;
+		float speed = 1.0f;
+
+		if (Input.GetKey (KeyCode.W)) mv += Vector3.forward * +speed;
+		if (Input.GetKey (KeyCode.A)) mv += Vector3.right * -speed;
+		if (Input.GetKey (KeyCode.S)) mv += Vector3.forward * -speed;
+		if (Input.GetKey (KeyCode.D)) mv += Vector3.right * speed;
+		if (Input.GetKey (KeyCode.Q)) mv += Vector3.up * -speed;
+		if (Input.GetKey (KeyCode.E)) mv += Vector3.up * speed;
+
+		Vector3 mvt = transform.localToWorldMatrix.MultiplyVector(mv);
+		transform.position += mvt;
+		Debug.Log (mvt);
+
 		if (Input.GetMouseButton (0) && Input.GetMouseButton (1)) {
 			Strafe (deltaX);
 			ChangeHeight (deltaY);
