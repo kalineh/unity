@@ -1,15 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\CameraMover.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\MapGenerator.cs">
     <Files>
-      <File FileName="Assets\MeshGenerator.cs" Line="74" Column="5" />
-      <File FileName="Assets\CameraMover.cs" Line="29" Column="64" />
-      <File FileName="Assets\MapGenerator.cs" Line="24" Column="31" />
+      <File FileName="Assets\MapGenerator.cs" Line="179" Column="3" />
+      <File FileName="Assets\MeshGenerator.cs" Line="1" Column="1" />
+      <File FileName="Assets\CameraMover.cs" Line="1" Column="1" />
       <File FileName="Assets\MapGeneratorEditorControl.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="D:\kdev\unity\purple\Assets\MapGenerator.cs" line="105" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

@@ -83,8 +83,9 @@ public class MapGenerator : MonoBehaviour {
 		}
 
 		List<List<Coord>> roomRegions = GetRegions (0);
-		
 		int roomThresholdSize = 20;
+		List<Room> survivingRooms = new List<Room> ();
+
 		
 		foreach (List<Coord> roomRegion in roomRegions)
 		{
@@ -95,7 +96,87 @@ public class MapGenerator : MonoBehaviour {
 					map[tile.tileX, tile.tileY] = 1;
 				}
 			}
+			else
+			{
+				survivingRooms.Add (new Room(roomRegion, map));
+			}
 		}
+
+		ConnectClosestRooms (survivingRooms);
+	}
+
+	void ConnectClosestRooms(List<Room> allRooms)
+	{
+		int bestDistance = 0;
+		Coord bestTileA = new Coord ();
+		Coord bestTileB = new Coord ();
+		Room bestRoomA = new Room ();
+		Room bestRoomB = new Room ();
+		bool possibleConnectionFound = false;
+
+		foreach (Room roomA in allRooms) {
+
+			possibleConnectionFound = false;
+
+			foreach (Room roomB in allRooms)
+			{
+				if (roomA == roomB)
+				{
+					continue;
+				}
+
+				if (roomA.IsConnected(roomB))
+				{
+					possibleConnectionFound = false;
+					break;
+				}
+
+				for (int tileIndexA = 0; tileIndexA < roomA.edgeTiles.Count; ++tileIndexA)
+				{
+					for (int tileIndexB = 0; tileIndexB < roomB.edgeTiles.Count; ++tileIndexB)
+					{
+						Coord tileA = roomA.edgeTiles[tileIndexA];
+						Coord tileB = roomB.edgeTiles[tileIndexB];
+						int distanceBetweenRooms =
+							(int)(
+							Mathf.Pow (tileA.tileX - tileB.tileX, 2.0f) +
+							Mathf.Pow (tileA.tileY - tileB.tileY, 2.0f));
+
+						if (distanceBetweenRooms < bestDistance || !possibleConnectionFound)
+						{
+							bestDistance = distanceBetweenRooms;
+							possibleConnectionFound = true;
+							bestTileA = tileA;
+							bestTileB = tileB;
+							bestRoomA = roomA;
+							bestRoomB = roomB;
+						}
+					}
+					
+				}
+			}
+
+			if (possibleConnectionFound)
+			{
+				CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
+			}
+		}
+	}
+
+	void CreatePassage(Room roomA, Room roomB, Coord tileA, Coord tileB)
+	{
+		Room.ConnectRoom (roomA, roomB);
+
+		Debug.DrawLine (CoordToWorldPoint (tileA), CoordToWorldPoint (tileB), Color.green, 100.0f);
+		Debug.DrawLine (CoordToWorldPoint (tileA), Vector3.zero, Color.green, 100.0f);
+		Debug.DrawLine (Vector3.one * 100.0f, Vector3.zero, Color.green, 100.0f);
+		Debug.Log (CoordToWorldPoint (tileA).ToString ());
+		Debug.Log (CoordToWorldPoint (tileB).ToString ());
+	}
+
+	Vector3 CoordToWorldPoint(Coord tile)
+	{
+		return new Vector3 (-width / 2.0f + tile.tileX, 5.0f, -height / 2.0f + tile.tileY);
 	}
 
 	List<List<Coord>> GetRegions(int tileType)
@@ -232,32 +313,51 @@ public class MapGenerator : MonoBehaviour {
 		}
 	};
 
-	void OnDrawGizmos()
+	class Room
 	{
-		if (map == null) {
-			GenerateMap();
+		public List<Coord> tiles;
+		public List<Coord> edgeTiles;
+		public List<Room> connectedRooms;
+		public int roomSize;
+
+		public Room()
+		{
 		}
 
-		if (Input.GetMouseButtonDown (0))
+		public Room(List<Coord> roomTiles, int[,] map)
 		{
-			Debug.Log("arasdfasdf");
-			GenerateMap();
-		}
+			tiles = roomTiles;
+			roomSize = tiles.Count;
+			connectedRooms = new List<Room>();
+			edgeTiles = new List<Coord>();
 
-		return;
-		if (map != null)
-		{
-			for (int x = 0; x < width; ++x)
+			foreach (Coord tile in tiles)
 			{
-				for (int y = 0; y < height; ++y)
+				for (int x = tile.tileX - 1; x <= tile.tileX + 1; ++x)
 				{
-					Gizmos.color = (map[x,y] == 1) ? Color.black : Color.white;
-					Vector3 pos = new Vector3(-width / 2 + x + 0.5f, 0, -height / 2.0f + y + 0.5f);
-					Vector3 size = new Vector3(1,1,1);
-					Gizmos.matrix = this.gameObject.transform.localToWorldMatrix;
-					Gizmos.DrawCube(pos, size);
+					for (int y = tile.tileY - 1; y <= tile.tileY + 1; ++y)
+					{
+						if (x == tile.tileX || y == tile.tileY)
+						{
+							if (map[x,y] == 1)
+							{
+								edgeTiles.Add (tile);
+							}
+						}
+					}
 				}
 			}
+		}
+
+		public static void ConnectRoom(Room a, Room b)
+		{
+			a.connectedRooms.Add (b);
+			b.connectedRooms.Add (a);
+		}
+
+		public bool IsConnected(Room other)
+		{
+			return connectedRooms.Contains (other);
 		}
 	}
 }
