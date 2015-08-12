@@ -86,7 +86,6 @@ public class MapGenerator : MonoBehaviour {
 		int roomThresholdSize = 20;
 		List<Room> survivingRooms = new List<Room> ();
 
-		
 		foreach (List<Coord> roomRegion in roomRegions)
 		{
 			if (roomRegion.Count < roomThresholdSize)
@@ -102,11 +101,31 @@ public class MapGenerator : MonoBehaviour {
 			}
 		}
 
-		ConnectClosestRooms (survivingRooms);
+		survivingRooms.Sort ();
+		survivingRooms [0].isMainRoom = true;
+		survivingRooms [0].isAccessibleFromMainRoom = true;
+
+		ConnectClosestRooms (survivingRooms, false);
 	}
 
-	void ConnectClosestRooms(List<Room> allRooms)
+	void ConnectClosestRooms(List<Room> allRooms, bool forceAccessibilityFromMainRoom)
 	{
+		List<Room> roomListA = new List<Room> ();
+		List<Room> roomListB = new List<Room> ();
+
+		if (forceAccessibilityFromMainRoom) {
+			foreach (Room room in allRooms) {
+				if (room.isAccessibleFromMainRoom) {
+					roomListB.Add (room);
+				} else {
+					roomListA.Add (room);
+				}
+			}
+		} else {
+			roomListA = allRooms;
+			roomListB = allRooms;
+		}
+
 		int bestDistance = 0;
 		Coord bestTileA = new Coord ();
 		Coord bestTileB = new Coord ();
@@ -114,13 +133,24 @@ public class MapGenerator : MonoBehaviour {
 		Room bestRoomB = new Room ();
 		bool possibleConnectionFound = false;
 
-		foreach (Room roomA in allRooms) {
+		foreach (Room roomA in roomListA) {
+			if (!forceAccessibilityFromMainRoom)
+			{
+				possibleConnectionFound = false;
+				if (roomA.connectedRooms.Count > 0)
+				{
+					continue;
+				}
+			}
 
-			possibleConnectionFound = false;
-
-			foreach (Room roomB in allRooms)
+			foreach (Room roomB in roomListB)
 			{
 				if (roomA == roomB)
+				{
+					continue;
+				}
+
+				if (roomA.IsConnected(roomB))
 				{
 					continue;
 				}
@@ -156,10 +186,19 @@ public class MapGenerator : MonoBehaviour {
 				}
 			}
 
-			if (possibleConnectionFound)
+			if (possibleConnectionFound && !forceAccessibilityFromMainRoom)
 			{
 				CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
 			}
+		}
+
+		if (possibleConnectionFound && forceAccessibilityFromMainRoom) {
+			CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
+			ConnectClosestRooms(allRooms, true);
+		}
+
+		if (!forceAccessibilityFromMainRoom) {
+			ConnectClosestRooms(allRooms, true);
 		}
 	}
 
@@ -168,15 +207,11 @@ public class MapGenerator : MonoBehaviour {
 		Room.ConnectRoom (roomA, roomB);
 
 		Debug.DrawLine (CoordToWorldPoint (tileA), CoordToWorldPoint (tileB), Color.green, 100.0f);
-		Debug.DrawLine (CoordToWorldPoint (tileA), Vector3.zero, Color.green, 100.0f);
-		Debug.DrawLine (Vector3.one * 100.0f, Vector3.zero, Color.green, 100.0f);
-		Debug.Log (CoordToWorldPoint (tileA).ToString ());
-		Debug.Log (CoordToWorldPoint (tileB).ToString ());
 	}
 
 	Vector3 CoordToWorldPoint(Coord tile)
 	{
-		return new Vector3 (-width / 2.0f + tile.tileX, 5.0f, -height / 2.0f + tile.tileY);
+		return new Vector3 (-width / 2.0f + tile.tileX, 2.0f, -height / 2.0f + tile.tileY);
 	}
 
 	List<List<Coord>> GetRegions(int tileType)
@@ -313,12 +348,14 @@ public class MapGenerator : MonoBehaviour {
 		}
 	};
 
-	class Room
+	class Room : IComparable<Room>
 	{
 		public List<Coord> tiles;
 		public List<Coord> edgeTiles;
 		public List<Room> connectedRooms;
 		public int roomSize;
+		public bool isAccessibleFromMainRoom;
+		public bool isMainRoom;
 
 		public Room()
 		{
@@ -351,13 +388,37 @@ public class MapGenerator : MonoBehaviour {
 
 		public static void ConnectRoom(Room a, Room b)
 		{
+			if (a.isAccessibleFromMainRoom) {
+				b.SetAccessibleFromMainRoom ();
+			} else if (b.isAccessibleFromMainRoom) {
+				a.SetAccessibleFromMainRoom();
+			}
+
 			a.connectedRooms.Add (b);
 			b.connectedRooms.Add (a);
+
 		}
 
 		public bool IsConnected(Room other)
 		{
 			return connectedRooms.Contains (other);
+		}
+
+		public int CompareTo(Room other)
+		{
+			return other.roomSize.CompareTo (roomSize);
+		}
+	
+		public void SetAccessibleFromMainRoom()
+		{
+			if (!isAccessibleFromMainRoom)
+			{
+				isAccessibleFromMainRoom = true;
+				foreach (Room connectedRoom in connectedRooms)
+				{
+					connectedRoom.SetAccessibleFromMainRoom();
+				}
+			}
 		}
 	}
 }
